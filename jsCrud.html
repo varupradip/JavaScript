@@ -1,0 +1,278 @@
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>javascript crud</title>
+    <style>
+        table,
+        tr,
+        th,
+        td {
+            border: 1px, dotted, black;
+            background-color: darkgray;
+            color: aliceblue;
+            text-align: center;
+        }
+
+        #btn {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="border: 1px dotted black; background-color: antiquewhite;">
+        <div style="text-align: center;">
+            <h1>javascript Crud</h1>
+            <br>
+            Name: <input type="text" name="name" id="name" placeholder="enter your name"><br><br>
+            Email: <input type="email" name="eml" id="eml" placeholder="enter your email"><br><br>
+            Number: <input type="tex" name="number" id="number" placeholder=" enter your email"><br><br>
+            <br>
+            <hr>
+            <button type="button" onclick="searchdata()" id="btn">Search</button>
+            <input type="search" id="search" name="search" placeholder="search your data">
+            <br>
+            <br>
+            <button type="button" onclick="datasubmit()" id="btn">Submit</button>
+            <button type="button" onclick="datasort()" id="btn">Sort</button>
+            <br>
+        </div>
+        <br>
+    </div>
+    <br>
+
+    <h1>Input DAta Table</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>name:</th>
+                <th>email:</th>
+                <th>number:</th>
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+    <script src="./jsCrud.js"></script>
+</body>
+
+</html> -->
+<!-- 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD with LocalStorage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        button {
+            cursor: pointer;
+            padding: 5px 10px;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h3>CRUD Operations</h3>
+    <input type="text" id="name" placeholder="Enter name">
+    <button onclick="datasubmit()">Submit</button>
+    <button onclick="sorted()">Sort A-Z</button>
+    <br><br>
+    
+    <input type="text" id="search" placeholder="Search by name">
+    <button onclick="searchdata()">Search</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Remove</th>
+                <th>Edit</th>
+                <th><input type="checkbox" id="selectAll"></th>
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+</div>
+
+<script>
+    let crud = JSON.parse(localStorage.getItem("hello")) || [];
+    let editIndex = -1;
+
+    // ✅ Function to Add or Update Data
+    const datasubmit = () => {
+        const name = document.getElementById("name").value.trim();
+        if (!name) return alert("Please enter a name!");
+
+        if (editIndex === -1) {
+            crud.push({ name });
+        } else {
+            crud[editIndex].name = name;
+            editIndex = -1;
+        }
+        document.getElementById("name").value = "";
+        localStorage.setItem("hello", JSON.stringify(crud));
+        tabledata();
+    };
+
+    // ✅ Function to Display Data in Table
+    const tabledata = () => {
+        document.getElementById("tbody").innerHTML = crud.map((item, index) => `
+            <tr>
+                <td>${item.name}</td>
+                <td><button onclick="remove(${index})">Remove</button></td>
+                <td><button onclick="edit(${index})">Edit</button></td>
+                <td><input type="checkbox" class="checkbox"></td>
+            </tr>
+        `).join('');
+
+        updateCheckboxListeners();
+    };
+
+    // ✅ Function to Remove Data
+    const remove = (index) => {
+        crud.splice(index, 1);
+        localStorage.setItem("hello", JSON.stringify(crud));
+        tabledata();
+    };
+
+    // ✅ Function to Edit Data
+    const edit = (index) => {
+        document.getElementById("name").value = crud[index].name;
+        editIndex = index;
+    };
+
+    // ✅ Function to Search Data
+    const searchdata = () => {
+        let searched = document.getElementById("search").value.toLowerCase();
+        let searchResult = crud.filter(item => item.name.toLowerCase().includes(searched));
+        document.getElementById("tbody").innerHTML = searchResult.map((item, index) => `
+            <tr>
+                <td>${item.name}</td>
+                <td><button onclick="remove(${index})">Remove</button></td>
+                <td><button onclick="edit(${index})">Edit</button></td>
+                <td><input type="checkbox" class="checkbox"></td>
+            </tr>
+        `).join('');
+    };
+
+    // ✅ Function to Sort Data
+    const sorted = () => {
+        crud.sort((a, b) => a.name.localeCompare(b.name));
+        localStorage.setItem("hello", JSON.stringify(crud));
+        tabledata();
+    };
+
+    // ✅ Function to Handle Select/Deselect All Checkboxes
+    const updateCheckboxListeners = () => {
+        const selectAllCheckbox = document.getElementById("selectAll");
+        const checkboxes = document.querySelectorAll(".checkbox");
+
+        selectAllCheckbox.addEventListener("change", function () {
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        });
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+                selectAllCheckbox.checked = [...checkboxes].every(cb => cb.checked);
+            });
+        });
+    };
+
+    tabledata();
+</script>
+
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Table with Checkboxes</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+            background-color: darkgray;
+            color: aliceblue;
+            text-align: center;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+        }
+        input[type="text"], input[type="search"] {
+            padding: 5px;
+            margin: 5px;
+        }
+        button {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="text-align: center;">
+        <input type="text" id="name" name="name" placeholder="Enter Name">
+        <button type="button" onclick="datasubmit()">Submit</button>
+
+        <input type="search" id="search" name="search" placeholder="Search your data">
+        <button type="button" onclick="searchdata()">Search</button>
+
+        <button type="button" onclick="sorted()">Sort</button>
+
+        <button type="button" onclick="removeSelected()">Delete Selected</button>
+
+    </div>
+
+    <br>
+
+    <table>
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="selectAll"></th>
+                <th>Name</th>
+                <th>Action</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+
+    <script src="./jsCrud.js"></script>
+</body>
+
+</html>
